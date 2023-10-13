@@ -1,0 +1,40 @@
+{
+  "name": "GPUImage",
+  "version": "0.1.0",
+  "license": "BSD",
+  "summary": "An open source iOS framework for GPU-based image and video processing.",
+  "homepage": "https://github.com/BradLarson/GPUImage3",
+  "authors": {
+    "Brad Larson": "contact@sunsetlakesoftware.com"
+  },
+  "source": {
+    "git": "https://github.com/BradLarson/GPUImage3",
+    "commit": "9085d33cd472dd9658e24a3e1891baecbe32272a"
+  },
+  "source_files": [
+    "framework/Source/**/*.{swift}",
+    "framework/Source/**/*.{metal}"
+  ],
+  "resources": "framework/Source/Operations/*.{h}",
+  "requires_arc": true,
+  "xcconfig": {
+    "CLANG_MODULES_AUTOLINK": "YES",
+    "OTHER_SWIFT_FLAGS": "$(inherited) -DGLES"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "ios": {
+    "exclude_files": [
+      "framework/Source/Mac",
+      "framework/Source/Linux",
+      "framework/Source/Operations/Shaders/ConvertedShaders_GL.swift"
+    ]
+  },
+  "frameworks": [
+    "Metal",
+    "CoreMedia",
+    "QuartzCore",
+    "AVFoundation"
+  ]
+}

@@ -1,0 +1,13 @@
+---
+meta_data:
+  analyze_cost: 176
+  resolve_dependencies_cost: 48053
+  install_pod_sources_cost: 8020
+  download_dependencies_cost: 8030
+  integrate_cost: 394
+  install_cost: 56551
+  cp_or_ln_cost: 51
+  pre_build_cost: 0
+  install_num: 1
+  use_http_download: 0
+  use_symlink: 0

@@ -1,0 +1,16 @@
+PODS:
+  - GPUImage (0.1.0)
+
+DEPENDENCIES:
+  - GPUImage (from `./GPUImage.podspec`)
+
+EXTERNAL SOURCES:
+  GPUImage:
+    :podspec: "./GPUImage.podspec"
+
+SPEC CHECKSUMS:
+  GPUImage: 9a6d99b85164b2bc9e894de128f895eb9f4c4c73
+
+PODFILE CHECKSUM: 8e419ec86b1aa783714c04b7f42f3cfc5dd61e78
+
+COCOAPODS: 1.11.3
