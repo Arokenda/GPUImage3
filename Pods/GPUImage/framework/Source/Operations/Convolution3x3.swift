@@ -8,7 +8,7 @@ public class Convolution3x3: TextureSamplingOperation {
                 internalMPSConvolution = MPSImageConvolution(device: sharedMetalRenderingDevice.device, kernelWidth: 3, kernelHeight: 3, weights: convolutionKernel.toMPSFloatArray())
                 (internalMPSConvolution as! MPSImageConvolution).edgeMode = .clamp
             } else {
-                uniformSettings[0] = convolutionKernel
+                uniformSettings["convolutionKernel"] = convolutionKernel
             }
         }
     }
@@ -18,7 +18,8 @@ public class Convolution3x3: TextureSamplingOperation {
         super.init(fragmentFunctionName:"convolution3x3")
         
 //        self.useMetalPerformanceShaders = true
-        uniformSettings.appendUniform(Matrix3x3.centerOnly)
+        ({convolutionKernel = Matrix3x3.centerOnly})()
+
         if #available(iOS 9, macOS 10.13, *) {
             self.metalPerformanceShaderPathway = usingMPSImageConvolution
         }

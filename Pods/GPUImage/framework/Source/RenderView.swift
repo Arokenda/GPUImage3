@@ -9,7 +9,7 @@ public class RenderView: MTKView, ImageConsumer {
     var renderPipelineState:MTLRenderPipelineState!
     
     public override init(frame frameRect: CGRect, device: MTLDevice?) {
-        super.init(frame: frameRect, device: device)
+        super.init(frame: frameRect, device: sharedMetalRenderingDevice.device)
         
         commonInit()
     }
@@ -26,7 +26,8 @@ public class RenderView: MTKView, ImageConsumer {
         
         self.device = sharedMetalRenderingDevice.device
         
-        renderPipelineState = generateRenderPipelineState(device:sharedMetalRenderingDevice, vertexFunctionName:"oneInputVertex", fragmentFunctionName:"passthroughFragment", operationName:"RenderView")
+        let (pipelineState, _) = generateRenderPipelineState(device:sharedMetalRenderingDevice, vertexFunctionName:"oneInputVertex", fragmentFunctionName:"passthroughFragment", operationName:"RenderView")
+        self.renderPipelineState = pipelineState
         
         enableSetNeedsDisplay = false
         isPaused = true
@@ -39,8 +40,7 @@ public class RenderView: MTKView, ImageConsumer {
     }
     
     public override func draw(_ rect:CGRect) {
-        if let currentDrawable = self.currentDrawable,
-            let imageTexture = currentTexture {
+        if let currentDrawable = self.currentDrawable, let imageTexture = currentTexture {
             let commandBuffer = sharedMetalRenderingDevice.commandQueue.makeCommandBuffer()
             
             let outputTexture = Texture(orientation: .portrait, texture: currentDrawable.texture)

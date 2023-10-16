@@ -31,18 +31,18 @@ class ViewController: UIViewController {
     
     func showFiler() -> Void {
         // Filtering image for saving
-//        let testImage = UIImage(named:"xx.jpeg")!
-//        let monochromeFilter = MonochromeFilter()
-//        let filteredImage = testImage.filterWithOperation(monochromeFilter)
+        let testImage = UIImage(named:"xx.jpeg")!
+        let monochromeFilter = MonochromeFilter()
+        let filteredImage = testImage.filterWithOperation(monochromeFilter)
         
-//        let pngImage = filteredImage.pngData()!
-//        do {
-//            let documentsDir = try FileManager.default.url(for:.documentDirectory, in:.userDomainMask, appropriateFor:nil, create:true)
-//            let fileURL = URL(string:"test.png", relativeTo:documentsDir)!
-//            try pngImage.write(to:fileURL, options:.atomic)
-//        } catch {
-//            print("Couldn't write to file with error: \(error)")
-//        }
+        let pngImage = filteredImage.pngData()!
+        do {
+            let documentsDir = try FileManager.default.url(for:.documentDirectory, in:.userDomainMask, appropriateFor:nil, create:true)
+            let fileURL = URL(string:"test.png", relativeTo:documentsDir)!
+            try pngImage.write(to:fileURL, options:.atomic)
+        } catch {
+            print("Couldn't write to file with error: \(error)")
+        }
         
         // Filtering image for display
         picture = PictureInput(image:UIImage(named:"xx.jpeg")!)

@@ -9,8 +9,9 @@ Pod::Spec.new do |s|
   # This commit on that fork of GPUImage should contain just upgrades needed for Swift 4 compatibility. See https://github.com/BradLarson/GPUImage2/pull/212
   # Replace with https://github.com/BradLarson/GPUImage2.git when merged
   # into BradLarson's repository.
-  s.source   = { :git => 'https://github.com/BradLarson/GPUImage3', :commit => '9085d33cd472dd9658e24a3e1891baecbe32272a' }
+  #s.source   = { :git => 'https://github.com/BradLarson/GPUImage3', :commit => '9085d33cd472dd9658e24a3e1891baecbe32272a' }
 
+  s.source   = { :git => 'https://github.com/BradLarson/GPUImage3' }
   s.source_files = 'framework/Source/**/*.{swift}','framework/Source/**/*.{metal}'
   s.resources = 'framework/Source/Operations/*.{h}'
   s.requires_arc = true

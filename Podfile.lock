@@ -8,8 +8,13 @@ EXTERNAL SOURCES:
   GPUImage:
     :podspec: "./GPUImage.podspec"
 
+CHECKOUT OPTIONS:
+  GPUImage:
+    :commit: 222868e1ba4137a9934b2135635783ef7083eb4d
+    :git: https://github.com/BradLarson/GPUImage3
+
 SPEC CHECKSUMS:
-  GPUImage: 9a6d99b85164b2bc9e894de128f895eb9f4c4c73
+  GPUImage: f8c2d82e16031afef32959b5d9f6893f08f1285f
 
 PODFILE CHECKSUM: 8e419ec86b1aa783714c04b7f42f3cfc5dd61e78
 

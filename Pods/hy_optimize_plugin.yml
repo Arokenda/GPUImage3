@@ -1,12 +1,12 @@
 ---
 meta_data:
-  analyze_cost: 176
-  resolve_dependencies_cost: 48053
-  install_pod_sources_cost: 8020
-  download_dependencies_cost: 8030
-  integrate_cost: 394
-  install_cost: 56551
-  cp_or_ln_cost: 51
+  analyze_cost: 195
+  resolve_dependencies_cost: 53603
+  install_pod_sources_cost: 7889
+  download_dependencies_cost: 7902
+  integrate_cost: 585
+  install_cost: 62171
+  cp_or_ln_cost: 69
   pre_build_cost: 0
   install_num: 1
   use_http_download: 0

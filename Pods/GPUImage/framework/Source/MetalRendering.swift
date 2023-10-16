@@ -1,9 +1,29 @@
 import Foundation
 import Metal
 
-public let standardImageVertices:[Float] = [-1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0]
+// OpenGL uses a bottom-left origin while Metal uses a top-left origin.
+public let standardImageVertices:[Float] = [-1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0]
 
 extension MTLCommandBuffer {
+    func clear(with color: Color, outputTexture: Texture) {
+        let renderPass = MTLRenderPassDescriptor()
+        renderPass.colorAttachments[0].texture = outputTexture.texture
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(Double(color.redComponent), Double(color.greenComponent), Double(color.blueComponent), Double(color.alphaComponent))
+        renderPass.colorAttachments[0].storeAction = .store
+        renderPass.colorAttachments[0].loadAction = .clear
+        
+        print("Clear color: \(renderPass.colorAttachments[0].clearColor)")
+        
+        guard let renderEncoder = self.makeRenderCommandEncoder(descriptor: renderPass) else {
+            fatalError("Could not create render encoder")
+        }
+//        renderEncoder.setRenderPipelineState(sharedMetalRenderingDevice.passthroughRenderState)
+
+//        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 0)
+
+        renderEncoder.endEncoding()
+    }
+    
     func renderQuad(pipelineState:MTLRenderPipelineState, uniformSettings:ShaderUniformSettings? = nil, inputTextures:[UInt:Texture], useNormalizedTextureCoordinates:Bool = true, imageVertices:[Float] = standardImageVertices, outputTexture:Texture, outputOrientation:ImageOrientation = .portrait) {
         let vertexBuffer = sharedMetalRenderingDevice.device.makeBuffer(bytes: imageVertices,
                                                                         length: imageVertices.count * MemoryLayout<Float>.size,
@@ -42,7 +62,7 @@ extension MTLCommandBuffer {
     }
 }
 
-func generateRenderPipelineState(device:MetalRenderingDevice, vertexFunctionName:String, fragmentFunctionName:String, operationName:String) -> MTLRenderPipelineState {
+func generateRenderPipelineState(device:MetalRenderingDevice, vertexFunctionName:String, fragmentFunctionName:String, operationName:String) -> (MTLRenderPipelineState, [String:(Int, MTLDataType)]) {
     guard let vertexFunction = device.shaderLibrary.makeFunction(name: vertexFunctionName) else {
         fatalError("\(operationName): could not compile vertex function \(vertexFunctionName)")
     }
@@ -58,7 +78,23 @@ func generateRenderPipelineState(device:MetalRenderingDevice, vertexFunctionName
     descriptor.fragmentFunction = fragmentFunction
     
     do {
-        return try device.device.makeRenderPipelineState(descriptor: descriptor)
+        var reflection:MTLAutoreleasedRenderPipelineReflection?
+        let pipelineState = try device.device.makeRenderPipelineState(descriptor: descriptor, options: [.bufferTypeInfo, .argumentInfo], reflection: &reflection)
+
+        var uniformLookupTable:[String:(Int, MTLDataType)] = [:]
+        if let fragmentArguments = reflection?.fragmentArguments {
+            for fragmentArgument in fragmentArguments where fragmentArgument.type == .buffer {
+                if
+                  (fragmentArgument.bufferDataType == .struct),
+                  let members = fragmentArgument.bufferStructType?.members.enumerated() {
+                    for (index, uniform) in members {
+                        uniformLookupTable[uniform.name] = (index, uniform.dataType)
+                    }
+                }
+            }
+        }
+        
+        return (pipelineState, uniformLookupTable)
     } catch {
         fatalError("Could not create render pipeline state for vertex:\(vertexFunctionName), fragment:\(fragmentFunctionName), error:\(error)")
     }

@@ -1,8 +1,9 @@
 public class LuminanceThreshold: BasicOperation {
-    public var threshold:Float = 0.5 { didSet { uniformSettings[0] = threshold } }
+    public var threshold:Float = 0.5 { didSet { uniformSettings["threshold"] = threshold } }
     
     public init() {
         super.init(fragmentFunctionName: "thresholdFragment", numberOfInputs:1)
-         uniformSettings.appendUniform(0.5)
+        
+        ({threshold = 0.5})()
     }
 }

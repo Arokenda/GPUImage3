@@ -8,8 +8,7 @@
     "Brad Larson": "contact@sunsetlakesoftware.com"
   },
   "source": {
-    "git": "https://github.com/BradLarson/GPUImage3",
-    "commit": "9085d33cd472dd9658e24a3e1891baecbe32272a"
+    "git": "https://github.com/BradLarson/GPUImage3"
   },
   "source_files": [
     "framework/Source/**/*.{swift}",
